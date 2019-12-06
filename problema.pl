@@ -37,51 +37,52 @@ comprobarInicio(ListaInicial):-
 
 % Etapa inicial
 configInicial(ListaInicial,ListaVacia):-
+  write('Etapa inicial'), write(' [ '),print(ListaInicial), write(','),print(ListaVacia), write(' ] '),
   mover(ListaInicial,ListaVacia).
 
 % 1º Movimiento: Mueve un elemento de una lista a otra. Extrae pastor y oveja
 mover([X1,X2,lobo,col], []):-
   extraer(X1,X2,[X1,X2,lobo,col],T),  % [lobo,col]
   insertar(X1,X2,[],R),   % [pastor,oveja]
-  mover(T,R).
+  write('Etapa 1 '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
 
 % 2º Movimiento: Mueve el pastor que regresa solo
 mover([lobo,col], [X,oveja]):-
   extraer(X,[X,oveja],R),        % [oveja]
   insertar(X,[lobo,col],T),     % [pastor,lobo,col]
-  mover(T,R).
+  write('Etapa 2 '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+
 
 % 3º Movimiento: El pastor transporta al Lobo
 mover([X1,X2,col], [oveja]):-
   extraer(X1,X2,[X1,X2,col],T),  % [col]
   insertar(X1,X2,[oveja],R),   % [pastor,lobo,oveja]
-  mover(T,R).
+  write('Etapa 3 '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+
 
 % 4º Movimiento: El pastor regresa con la Oveja
 mover([col], [X1,lobo,X2]):-
-  extraer(X1,[X1,lobo,X2],R),       % [lobo,oveja]
-  extraer(X2,[lobo,X2],R),       % [lobo]
+  extraer(X1,X2,[X1,X2,lobo],R), % [lobo]
   insertar(X1,X2,[col],T), % [pastor,oveja,col]
-  mover(T,R).
+  write('Etapa 4 '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
 
 % 5º Movimiento: El pastor transporta la col
 mover([X1,oveja,X2],[lobo]):-
-  extraer(X1,[X1,oveja,X2],T),     % [oveja,col]
-  extraer(X2,[oveja,X2],T),     % [oveja]
+  extraer(X1,X2,[X1,X2,oveja],T),  % [oveja]
   insertar(X1,X2,[lobo],R),   % [pastor,col,lobo]
-  mover(T,R).
+  write('Etapa 5 '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
 
 % 6º Movimiento: El pastor regresa solo
 mover([oveja], [X,col,lobo]):-
   extraer(X,[X,col,lobo],R),        % [col,lobo]
   insertar(X,[oveja],T),     % [pastor,oveja]
-  mover(T,R).
+  write('Etapa 6 '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
 
 % El pastor transporta a la oveja (FIN)
 mover([X1,X2], [col,lobo]):-
   extraer(X1,X2,[X1,X2], T), % []
   insertar(X1,X2,[col,lobo],R),   % [pastor,oveja,col,lobo]
-  mover(T,R).
+  write('Etapa 7 '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
 
 mover([], [pastor,oveja,col,lobo]):-
   true,!.
@@ -90,5 +91,3 @@ mover([], [pastor,oveja,col,lobo]):-
 solucion(ListaInicial, X) :-
   comprobarInicio(ListaInicial),
   configInicial(ListaInicial,[]).
-%  mover([pastor,oveja,lobo,col],[]).  % Si se cumple que la ListaInicial contiene 4 elementos, continuamos.
-%  mover(pastor,)
