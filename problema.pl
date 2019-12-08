@@ -41,7 +41,7 @@ configInicial(ListaInicial,ListaVacia):-
   mover(ListaInicial,ListaVacia).
 
 % 1º Movimiento: Mueve un elemento de una lista a otra. Extrae pastor y oveja
-mover([X1,X2,lobo,col], []):-
+mover([X1,lobo,X2,col], []):-
   extraer(X1,X2,[X1,X2,lobo,col],T),  % [lobo,col]
   insertar(X1,X2,[],R),   % [pastor,oveja]
   nl,write('El pastor transporta a la oveja >> '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
@@ -52,13 +52,11 @@ mover([lobo,col], [X,oveja]):-
   insertar(X,[lobo,col],T),     % [pastor,lobo,col]
   nl,write('El pastor regresa solo << '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
 
-
 % 3º Movimiento: El pastor transporta al Lobo
 mover([X1,X2,col], [oveja]):-
   extraer(X1,X2,[X1,X2,col],T),  % [col]
   insertar(X1,X2,[oveja],R),   % [pastor,lobo,oveja]
   nl,write('El pastor transporta el lobo >>'), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
-
 
 % 4º Movimiento: El pastor regresa con la Oveja
 mover([col], [X1,lobo,X2]):-
