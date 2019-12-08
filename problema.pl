@@ -1,14 +1,3 @@
-orilla([pastor, lobo, oveja, col]).
-orilla([lobo, col]).
-orilla([pastor, oveja]).
-orilla([pastor, lobo, col]).
-orilla([pastor, lobo, oveja]).
-orilla([pastor, oveja, col]).
-orilla([lobo]).
-orilla([oveja]).
-orilla([col]).
-% LA LISTA VACÍA??
-
 % Extrae un elmento de la cabeza de la lista.
 extraer(X,[X|T],T).
 extraer(X,[A|T],[A|R]):-extraer(X,T,R).
@@ -36,56 +25,73 @@ comprobarInicio(ListaInicial):-
   acclen(ListaInicial,0,Length), Length is 4.
 
 % Etapa inicial
-configInicial(ListaInicial,ListaVacia):-
-  write('Etapa inicial --'), write(' [ '),print(ListaInicial), write(','),print(ListaVacia), write(' ] '),
-  mover(ListaInicial,ListaVacia).
+configInicial(ListaInicial,ListaVacia,X):-
+  insertar(ListaInicial,ListaVacia,[],X),
+  mover(ListaInicial,ListaVacia,X).
 
 % 1º Movimiento: Mueve un elemento de una lista a otra. Extrae pastor y oveja
-mover([X1,lobo,X2,col], []):-
+mover([X1,X2,lobo,col], [], X):-
   extraer(X1,X2,[X1,X2,lobo,col],T),  % [lobo,col]
   insertar(X1,X2,[],R),   % [pastor,oveja]
-  nl,write('El pastor transporta a la oveja >> '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+  insertar(T,R,[],Z),
+  insertar(X,Z,[],Y),
+  mover(T,R,Y).
 
 % 2º Movimiento: Mueve el pastor que regresa solo
-mover([lobo,col], [X,oveja]):-
-  extraer(X,[X,oveja],R),        % [oveja]
-  insertar(X,[lobo,col],T),     % [pastor,lobo,col]
-  nl,write('El pastor regresa solo << '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+mover([lobo,col], [X1,oveja], X):-
+  extraer(X1,[X1,oveja],R),        % [oveja]
+  insertar(X1,[lobo,col],T),     % [pastor,lobo,col]
+  insertar(T,R,[],Z),
+  insertar(X,Z,[],Y),
+  %nl,write('Y2 = '), write(Y),
+  mover(T,R,Y).
+
 
 % 3º Movimiento: El pastor transporta al Lobo
-mover([X1,X2,col], [oveja]):-
+mover([X1,X2,col], [oveja], X):-
   extraer(X1,X2,[X1,X2,col],T),  % [col]
   insertar(X1,X2,[oveja],R),   % [pastor,lobo,oveja]
-  nl,write('El pastor transporta el lobo >>'), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+  insertar(T,R,[],Z),
+  insertar(X,Z,[],Y),
+  %nl,write('Y3 = '), write(Y),
+  mover(T,R,Y).
 
 % 4º Movimiento: El pastor regresa con la Oveja
-mover([col], [X1,lobo,X2]):-
+mover([col], [X1,lobo,X2], X):-
   extraer(X1,X2,[X1,X2,lobo],R), % [lobo]
   insertar(X1,X2,[col],T), % [pastor,oveja,col]
-  nl,write('El pastor regresa con la oveja << '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+  insertar(T,R,[],Z),
+  insertar(X,Z,[],Y),
+  %nl,write('Y4 = '), write(Y),
+  mover(T,R,Y).
 
 % 5º Movimiento: El pastor transporta la col
-mover([X1,oveja,X2],[lobo]):-
+mover([X1,oveja,X2],[lobo], X):-
   extraer(X1,X2,[X1,X2,oveja],T),  % [oveja]
   insertar(X1,X2,[lobo],R),   % [pastor,col,lobo]
-  nl,write('El pastor transporta la col >> '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+  insertar(T,R,[],Z),
+  insertar(X,Z,[],Y),
+  %nl,write('Y5 = '), write(Y),
+  mover(T,R,Y).
 
 % 6º Movimiento: El pastor regresa solo
-mover([oveja], [X,col,lobo]):-
-  extraer(X,[X,col,lobo],R),        % [col,lobo]
-  insertar(X,[oveja],T),     % [pastor,oveja]
-  nl,write('El pastor regresa solo << '), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
+mover([oveja], [X1,col,lobo], X):-
+  extraer(X1,[X1,col,lobo],R),        % [col,lobo]
+  insertar(X1,[oveja],T),     % [pastor,oveja]
+  insertar(T,R,[],Z),
+  insertar(X,Z,[],Y),
+  %nl,write('Y6 = '), write(Y),
+  mover(T,R,Y).
 
 % El pastor transporta a la oveja (FIN)
-mover([X1,X2], [col,lobo]):-
+mover([X1,X2], [col,lobo], X):-
   extraer(X1,X2,[X1,X2], T), % []
   insertar(X1,X2,[col,lobo],R),   % [pastor,oveja,col,lobo]
-  nl,write('El pastor transporta a la oveja (FIN) >>'), write('[ '), print(T), write(','), print(R), write(' ] '),mover(T,R).
-
-mover([], [pastor,oveja,col,lobo]):-
-  true,!.
+  insertar(T,R,[],Z),
+  insertar(X,Z,[],Y),
+  nl,write('X = '),write(Y).
 
 % Genera la solución del problema.
 solucion(ListaInicial, X) :-
   comprobarInicio(ListaInicial),
-  configInicial(ListaInicial,[]).
+  configInicial(ListaInicial,[],X).
