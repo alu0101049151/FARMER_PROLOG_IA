@@ -27,7 +27,7 @@ comprobarInicio(ListaInicial):-
 % Etapa inicial
 configInicial(ListaInicial,ListaVacia,X):-
   insertar(ListaInicial,ListaVacia,[],X),
-  nl,write('X = '),print(X),
+  nl,write('X = '),write(X),
   mover(ListaInicial,ListaVacia,X).
 
 % 1º Movimiento: Mueve un elemento de una lista a otra. Extrae pastor y oveja
@@ -36,7 +36,7 @@ mover([X1,lobo,X2,col], [], X):-
   insertar(X1,X2,[],R),   % [pastor,oveja]
   insertar(T,R,[],Z),
   %insertar(X,Z,[],Y),
-  nl,print(Z),
+  nl,write(Z),
   mover(T,R,Z).
 
 % 2º Movimiento: Mueve el pastor que regresa solo
@@ -45,7 +45,7 @@ mover([lobo,col], [X1,oveja], X):-
   insertar(X1,[lobo,col],T),     % [pastor,lobo,col]
   insertar(T,R,[],Z),
   %insertar(X,Z,[],Y),
-  nl,print(Z),
+  nl,write(Z),
   mover(T,R,Z).
 
 % 3º Movimiento: El pastor transporta al Lobo
@@ -54,7 +54,7 @@ mover([X1,X2,col], [oveja], X):-
   insertar(X1,X2,[oveja],R),   % [pastor,lobo,oveja]
   insertar(T,R,[],Z),
  %insertar(X,Z,[],Y),
-  nl,print(Z),
+  nl,write(Z),
   mover(T,R,Z).
 
 % 4º Movimiento: El pastor regresa con la Oveja
@@ -63,7 +63,7 @@ mover([col], [X1,lobo,X2], X):-
   insertar(X1,X2,[col],T), % [pastor,oveja,col]
   insertar(T,R,[],Z),
   %insertar(X,Z,[],Y),
-  nl,print(Z),
+  nl,write(Z),
   mover(T,R,Z).
 
 % 5º Movimiento: El pastor transporta la col
@@ -72,7 +72,7 @@ mover([X1,oveja,X2],[lobo], X):-
   insertar(X1,X2,[lobo],R),   % [pastor,col,lobo]
   insertar(T,R,[],Z),
   %insertar(X,Z,[],Y),
-  nl,print(Z),
+  nl,write(Z),
   mover(T,R,Z).
 
 % 6º Movimiento: El pastor regresa solo
@@ -81,7 +81,7 @@ mover([oveja], [X1,col,lobo], X):-
   insertar(X1,[oveja],T),     % [pastor,oveja]
   insertar(T,R,[],Z),
   %insertar(X,Z,[],Y),
-  nl,print(Z),
+  nl,write(Z),
   mover(T,R,Z).
 
 % El pastor transporta a la oveja (FIN)
@@ -90,7 +90,7 @@ mover([X1,X2], [col,lobo], X):-
   insertar(X1,X2,[col,lobo],R),   % [pastor,oveja,col,lobo]
   insertar(T,R,[],Z),
   %insertar(X,Z,[],Y),
-  nl,print(Z).
+  nl,write(Z).
   %nl,write('X = '),write(Y).
 
 % Genera la solución del problema.
