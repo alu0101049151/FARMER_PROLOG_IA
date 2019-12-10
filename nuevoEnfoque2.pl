@@ -33,7 +33,7 @@ orilla(L,[pastor,oveja,lobo,col]):- permutacion(L,[pastor,oveja,lobo,col]).
 % Se entiende que si solo hay un elemento, no hay ninguno o hay 4, la orilla
 % también es válida.
 %=======================================
-
+%
 %% extraer(X,L,R) - Unifica si la lista R equivale
 % a la lista L, extrayendo de ella el elemento X.
 % Ej: extraer(c,[a,b,c,d,e],[a,b,d,e]).
@@ -53,14 +53,14 @@ pastorIzda(L1):-
     member(pastor, L1), extraer(pastor,L1,Y1),
     esValida(Y1).
 
-paso(L1,L2,X,Result):-
-    member(pastor, L1),
+paso(L1,L2,X,Resultado):-
+    member(pastor, L1), % No habría que ponerlo debajo también?
       ((extraer(pastor,L1,Y1) , orilla(Y1,Z1) , R2 = [pastor|L2],
       	orilla(R2,Z2), Z = [Z1,Z2] , not(member(Z,X)) , append(X,[Z],Acc),
-        paso(Z1,Z2,Acc,Resultado);
-      (extraer(pastor,L2,Y2), esValida(Y2) , append(pastor,[pastor|L1],R1),
-        esValida(R1), append(Y2,Y))
+        paso(Z1,Z2,Acc,Resultado));
+      (extraer(pastor,L2,Y2), orilla(Y2,Z2) , R1 = [pastor|L1],
+        orilla(R1,Z1), Z = [Z2,Z1] , not(member(Z,X)) , append(X,[Z],Acc),
+        paso(Z2,Z1,Acc,Resultado));
 
-
-        member(pastor, L2), extraer(pastor,L2,Y2),
-        esValida(Y2) , append(pastor, L1,L1) ;
+    member(pastor, L2), extraer(pastor,L2,Y2),
+    esValida(Y2) , append(pastor, L1,L1) ;
