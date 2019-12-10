@@ -60,3 +60,7 @@ paso(L1,L2,X,Result):-
         paso(Z1,Z2,Acc,Resultado);
       (extraer(pastor,L2,Y2), esValida(Y2) , append(pastor,[pastor|L1],R1),
         esValida(R1), append(Y2,Y))
+
+
+        member(pastor, L2), extraer(pastor,L2,Y2),
+        esValida(Y2) , append(pastor, L1,L1) ;
