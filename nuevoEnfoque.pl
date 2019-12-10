@@ -37,10 +37,9 @@ insertar(X1,X2,L1,[X1,X2|L1]).
 % NO OLVIDAR \= (NOT EQUAL)
 
 solucion(L1,L2,X):-
+    X = [],
     orilla(L1,Y1), orilla(L2,Y2),
-    insertar(L1,L2,[],Z),
-    write(Z),
-    not(member(Z,X)), append([[ Z,[] ]],X,Y),
+    not(member([L1, L2],X)), append([[ L1, L2 ]],X,Y),
     write(Y).
 
 juntar(Y,X):-
