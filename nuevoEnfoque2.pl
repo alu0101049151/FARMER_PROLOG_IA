@@ -28,21 +28,8 @@ extraer(X,[A|T],[A|R]):-extraer(X,T,R).
 extraer(X1,X2,[X1,X2|T],T).
 extraer(X1, X2, [A|T],[A|R]):-extraer(X1,X2,T,R).
 
-/*pastorL1(L1):-
-    esValida(L1) ,
-    member(pastor,L1) , extraer(pastor,L1,Y1).
-
-pastorL2(L2):-
-    esValida(L2) ,
-    member(pastor,L2) , extraer(pastor,L2,Y2).
-
-pastorIzda(L1):-
-    member(pastor, L1), extraer(pastor,L1,Y1),
-    esValida(Y1).*/
-
 paso(L1,L2,X,Resultado):-
     length(L1,0) , length(L2,4),
-    write(X),
     Resultado = X.
 
 paso(L1,L2,X,Resultado):-
@@ -56,7 +43,7 @@ paso(L1,L2,X,Resultado):-
       ( % Si solo se tiene que mover al pastor desde la derecha.
         member(pastor, L2),
           extraer(pastor,L2,Y2), orilla(Y2,Z2) , R1 = [pastor|L1],
-          orilla(R1,Z1), Z = [Z2,Z1] , not(member(Z,X)) , append(X,[Z],Acc),
+          orilla(R1,Z1), Z = [Z1,Z2] , not(member(Z,X)) , append(X,[Z],Acc),
           paso(Z1,Z2,Acc,Resultado)
       );
       ( % Si el pastor se tiene que mover desde la derecha con otro elemento.
@@ -68,11 +55,11 @@ paso(L1,L2,X,Resultado):-
       ( % Si el pastor se tiene que mover desde la izquierda con otro elemento.
         member(pastor, L2),
           extraer(pastor,L2,Y2), extraer(E2,Y2,Y22), orilla(Y22,Z2) , R1 = [pastor,E2|L1],
-          orilla(R1,Z1), Z = [Z2,Z1] , not(member(Z,X)) , append(X,[Z],Acc),
+          orilla(R1,Z1), Z = [Z1,Z2] , not(member(Z,X)) , append(X,[Z],Acc),
           paso(Z1,Z2,Acc,Resultado)
       )
     ).
 
-/*valido(E2,Y2,Y22,Z2,E1):-
-    extraer(E2,Y2,Y22), orilla(Y22,Z2) ;
-    extraer(E2,Y2,Y22), valido(E1,Y22,Z).*/
+solucion(L1,L2,Resultado):-
+    X = [[L1,L2]],
+    paso(L1,L2,X,Resultado).
