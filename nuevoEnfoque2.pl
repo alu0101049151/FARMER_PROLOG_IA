@@ -5,7 +5,7 @@
 permutacion([],[]).
 permutacion([X|T],Y):-extraer(X,Y,Z),permutacion(T,Z).
 
-%%========================= HECHOS POSIBLES=================================
+%========================= HECHOS POSIBLES=================================
 orilla(L,[pastor,oveja]):- permutacion(L,[pastor,oveja]).
 orilla(L,[lobo,col]):- permutacion(L,[lobo,col]).
 orilla(L,[pastor,lobo,col]):- permutacion(L,[pastor,lobo,col]).
