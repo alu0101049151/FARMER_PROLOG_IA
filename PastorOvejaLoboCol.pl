@@ -1,3 +1,8 @@
+% Autores:
+ % Edgar Figueroa González
+ % Adrián Mejías Ramos
+ % Basilio Gómez Navarro
+
 % permutacion(X,Y) - Unifica si la lista X es una
 % permutacion de la lista Y. El segundo argumento
 % siempre debe estar completamente definido.
