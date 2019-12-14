@@ -24,10 +24,6 @@ orilla(L,[]):- permutacion(L,[]).
 extraer(X,[X|T],T).
 extraer(X,[A|T],[A|R]):-extraer(X,T,R).
 
-% Extrae 2 elementos de la cabeza de la lista
-extraer(X1,X2,[X1,X2|T],T).
-extraer(X1, X2, [A|T],[A|R]):-extraer(X1,X2,T,R).
-
 paso(L1,L2,X,Resultado):-
     length(L1,0) , length(L2,4),
     Resultado = X.
