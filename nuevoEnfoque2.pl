@@ -46,13 +46,13 @@ paso(L1,L2,X,Resultado):-
           orilla(R1,Z1), Z = [Z1,Z2] , not(member(Z,X)) , append(X,[Z],Acc),
           paso(Z1,Z2,Acc,Resultado)
       );
-      ( % Si el pastor se tiene que mover desde la derecha con otro elemento.
+      ( % Si el pastor se tiene que mover desde la izquierda con otro elemento.
       	member(pastor, L1),
           extraer(pastor,L1,Y1), extraer(E1,Y1,Y11), orilla(Y11,Z1), R2 = [pastor,E1|L2],
           orilla(R2,Z2), Z = [Z1,Z2] , not(member(Z,X)) , append(X,[Z],Acc),
           paso(Z1,Z2,Acc,Resultado)
       );
-      ( % Si el pastor se tiene que mover desde la izquierda con otro elemento.
+      ( % Si el pastor se tiene que mover desde la derecha con otro elemento.
         member(pastor, L2),
           extraer(pastor,L2,Y2), extraer(E2,Y2,Y22), orilla(Y22,Z2) , R1 = [pastor,E2|L1],
           orilla(R1,Z1), Z = [Z1,Z2] , not(member(Z,X)) , append(X,[Z],Acc),
